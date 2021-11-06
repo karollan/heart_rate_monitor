@@ -29,7 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.23.0+1
+  flutter_custom_dialog: ^1.2.0
+  sqflite: ^2.0.0-nullsafety.2
+  path: ^1.8.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -63,6 +65,7 @@ flutter:
     - assets/images/instructions.png
     - assets/images/list.png
     - assets/images/editor.png
+    - assets/images/how_to_use.png
 
   fonts:
     - family: Montserrat Regular

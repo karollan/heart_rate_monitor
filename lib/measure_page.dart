@@ -1,8 +1,11 @@
 
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_rate_monitor/home_screen.dart';
+import 'package:heart_rate_monitor/models/measure.dart';
 
 
 //About Page
@@ -49,7 +52,61 @@ class MeasurePage extends StatelessWidget {
                                     ]
                                 )
                             ),
-                            Spacer(),
+
+                            Container(
+                              constraints: BoxConstraints(minHeight: 270.0, minWidth: 270),
+                              margin: EdgeInsets.all(10),
+                              child: ElevatedButton(
+                                //Measure START
+                                onPressed: () async {
+                                  //Make singleton
+                                  var databaseHelper = DatabaseHelper();
+                                  //Create data
+                                  Random rand = Random();
+                                  int result = rand.nextInt(100);
+                                  Measure measure = Measure(result: result.toString(), date: '12.03.2021 13:54', img: 'heart.png', graph: 'graph');
+                                  //insert data
+                                  await databaseHelper.insertMeasure(measure);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 6,
+                                  shape: CircleBorder(),
+                                  padding: EdgeInsets.all(20.0),
+                                  primary: Colors.red,
+                                  onPrimary: Colors.white,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(0),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          'TAP HERE TO START',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontFamily: 'Montserrat Regular'
+                                          ),
+                                        ),
+                                        SizedBox(height: 30,),
+                                        Icon(
+                                          Icons.favorite,
+                                          color: Colors.white,
+                                          size: 64,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 40),
+                            Expanded(
+                              child: Text("GRAPH"),
+                            ),
+
                             Container(
                               constraints: BoxConstraints(minHeight: 50.0),
                               margin: EdgeInsets.all(10),
@@ -59,7 +116,7 @@ class MeasurePage extends StatelessWidget {
                                       .push(PageRouteBuilder(
                                       pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
                                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        const begin = Offset(0.0, 1.0);
+                                        const begin = Offset(-1.0, 0.0);
                                         const end = Offset.zero;
                                         const curve = Curves.ease;
 

@@ -49,7 +49,51 @@ class HelpPage extends StatelessWidget {
                                     ]
                                 )
                             ),
-                            Spacer(),
+
+                            Container(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset('assets/images/how_to_use.png')
+                                  ),
+
+                                ]
+                              )
+                            ),
+
+                            Expanded(
+                                child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                        children: <Widget>[
+                                          SizedBox(height: 20),
+                                          Text('How to measure my heart rate?', style: TextStyle(fontSize: 20, fontFamily: 'Montserrat Medium')),
+                                          SizedBox(height: 10),
+                                          Text('To measure your heart rate first place the tip of your index finger on the back of your device so that it covers'
+                                              'both the camera and the flashlight. You can then start the measurement by tapping the circle at the center'
+                                              'of the screen.', style: TextStyle(fontSize: 16, fontFamily: 'Montserrat Regular'), textAlign: TextAlign.justify,),
+                                          SizedBox(height: 20),
+                                          Text('WARNING', style: TextStyle(fontSize: 20, fontFamily: 'Montserrat Medium')),
+                                          SizedBox(height: 10),
+                                          Text('In some devices the flash can get very hot, please avoid touching it.',
+                                            style: TextStyle(fontSize: 16, fontFamily: 'Montserrat Regular'), textAlign: TextAlign.justify,),
+                                          SizedBox(height: 20),
+                                          Text('Tips', style: TextStyle(fontSize: 20, fontFamily: 'Montserrat Medium')),
+                                          SizedBox(height: 10),
+                                          Text('Keep your finger as still as possible as even slight movements can disrupt the measurement. When the'
+                                              'graph is showing a distinct steady pattern of peaks corresponding to your heart beats the measurement'
+                                              'should be accurate. If the graph is noisy or very irregular you need to keep your finger more steady'
+                                              'or possinly adjust the way you are holding your finger.', style: TextStyle(fontSize: 16, fontFamily: 'Montserrat Regular'), textAlign: TextAlign.justify,),
+                                        ]
+                                    )
+                                )
+                            ),
+
+                            //Spacer(),
                             Container(
                               constraints: BoxConstraints(minHeight: 50.0),
                               margin: EdgeInsets.all(10),
@@ -59,7 +103,7 @@ class HelpPage extends StatelessWidget {
                                       .push(PageRouteBuilder(
                                       pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
                                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        const begin = Offset(0.0, 1.0);
+                                        const begin = Offset(-1.0, 0.0);
                                         const end = Offset.zero;
                                         const curve = Curves.ease;
 
