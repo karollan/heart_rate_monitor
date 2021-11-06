@@ -14,7 +14,7 @@ class AboutPage extends StatelessWidget {
     //style
     var cardTextStyle = TextStyle(
         fontFamily: 'Montserrat Medium',
-        fontSize: 18,
+        fontSize: 20,
         color: Color.fromRGBO(63, 63, 63, 1));
 
     return Scaffold(
@@ -52,108 +52,121 @@ class AboutPage extends StatelessWidget {
                       )
                   ),
 
-                  Stack(
-                    children: <Widget>[
-                      Card(
-                        margin: const EdgeInsets.only(top: 20.0),
-                        elevation: 4,
-                        child: SizedBox(
-                            height: 200.0,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "Jakis",
-                                  ),
-                                  Text("tekst")
-                                ],
-                              ),
-                            )),
-                      ),
-
-                      Positioned(
-                        top: .0,
-                        left: 0.0,
-                        child: Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, .0, .0, .0),
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    radius: 48.0,
-                                    backgroundImage: NetworkImage('https://github.com/AgnieszkaCybulska.png'),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text("Agnieszka Cybulska", style: cardTextStyle)
-                                      ]
-                                  )
-                                ]
-                            )
-                          )
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Stack(
-
-                    children: <Widget>[
-                      Card(
-                        margin: const EdgeInsets.only(top: 20.0),
-                        elevation: 4,
-                        child: SizedBox(
-                            height: 200.0,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 45.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "Jakis",
-                                  ),
-                                  Text("tekst")
-                                ],
-                              ),
-                            )),
-                      ),
-
-                      Positioned(
-                        top: .0,
-                        left: 0.0,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(20.0, .0, .0, .0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 48.0,
-                                backgroundImage: NetworkImage('https://github.com/karollan.png'),
-                              ),
-                              SizedBox(width: 20),
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                              children: <Widget>[
+                                Stack(
                                   children: <Widget>[
-                                    Text("Karol Lange", style: cardTextStyle)
-                                  ]
-                              )
-                            ]
-                          )
+                                    Card(
+                                      margin: const EdgeInsets.only(top: 20.0),
+                                      elevation: 4,
+                                      child: SizedBox(
+                                          height: size.height*.3,
+                                          width: double.infinity,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 20.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Jakis",
+                                                ),
+                                                Text("tekst")
+                                              ],
+                                            ),
+                                          )),
+                                    ),
 
-                        ),
-                      )
-                    ],
+                                    Positioned(
+                                        top: .0,
+                                        left: 0.0,
+                                        child: Padding(
+                                            padding: EdgeInsets.fromLTRB(20.0, 0.0, .0, .0),
+                                            child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  CircleAvatar(
+                                                    radius: 48.0,
+                                                    backgroundImage: NetworkImage('https://github.com/AgnieszkaCybulska.png'),
+                                                  ),
+                                                  SizedBox(width: 20),
+                                                  Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        SizedBox(height: 20),
+                                                        Text("Agnieszka", style: cardTextStyle, maxLines: 2,),
+                                                        Text("Cybulska", style: cardTextStyle, maxLines: 2,)
+                                                      ]
+                                                  )
+                                                ]
+                                            )
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Stack(
+
+                                  children: <Widget>[
+                                    Card(
+                                      margin: const EdgeInsets.only(top: 20.0),
+                                      elevation: 4,
+                                      child: SizedBox(
+                                          height: size.height*.3,
+                                          width: double.infinity,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 45.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Jakis",
+                                                ),
+                                                Text("tekst")
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+
+                                    Positioned(
+                                      top: .0,
+                                      left: 0.0,
+                                      child: Padding(
+                                          padding: EdgeInsets.fromLTRB(20.0, .0, .0, .0),
+                                          child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                CircleAvatar(
+                                                  radius: 48.0,
+                                                  backgroundImage: NetworkImage('https://github.com/karollan.png'),
+                                                ),
+                                                SizedBox(width: 20),
+                                                Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text("Karol Lange", style: cardTextStyle, maxLines: 1,)
+                                                    ]
+                                                )
+                                              ]
+                                          )
+
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ]
+                          )
+                      ),
+
                   ),
-                  Spacer(),
+
+
                   Container(
                     constraints: BoxConstraints(minHeight: 50.0),
                     margin: EdgeInsets.all(10),

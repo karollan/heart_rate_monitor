@@ -20,7 +20,10 @@ class _HistoryPageState extends State<HistoryPage> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Measure> measureList = List.empty(growable: true);
 
+
   void showMeasureDialog(BuildContext context, Measure measure) {
+    //to get size
+    var size = MediaQuery.of(context).size;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -31,7 +34,7 @@ class _HistoryPageState extends State<HistoryPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           child: Container(
-            height: 350,
+            height: size.height*.45,
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
@@ -46,13 +49,13 @@ class _HistoryPageState extends State<HistoryPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Image.asset('assets/images/${measure.img}',
-                            height: 100.0,),
+                            height: size.height*.1,),
                           SizedBox(width: 30),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(measure.result, style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:32)),
+                              Text('BPM ${measure.result}', style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:28)),
                               Text(measure.date, style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:16)),
                             ]
                           )
@@ -68,7 +71,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        constraints: BoxConstraints(minHeight: 50.0),
+                        constraints: BoxConstraints(minHeight: size.height*.05),
                         margin: EdgeInsets.all(10),
                         child: ElevatedButton(
                           onPressed: () {
@@ -105,9 +108,9 @@ class _HistoryPageState extends State<HistoryPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 40),
+                      SizedBox(width: size.width*.04),
                       Container(
-                        constraints: BoxConstraints(minHeight: 50.0),
+                        constraints: BoxConstraints(minHeight: size.height*.05),
                         margin: EdgeInsets.all(10),
                         child: ElevatedButton(
                           onPressed: () {
@@ -161,7 +164,7 @@ class _HistoryPageState extends State<HistoryPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(measure.result, style: TextStyle(fontFamily: 'Montserrat Medium')),
+            Text('BPM ${measure.result}', style: TextStyle(fontFamily: 'Montserrat Medium')),
             Text(measure.date, style: TextStyle(fontSize: 12, fontFamily: 'Montserrat Regular'))
           ],
         ),

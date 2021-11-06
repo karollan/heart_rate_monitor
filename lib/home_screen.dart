@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisSpacing: 10,
                             childAspectRatio: 2.4,
                             primary: false,
+                            shrinkWrap: true,
                             children: <Widget>[
                               //Measure card
                               Card(
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Image.asset('assets/images/heart.png', height: 100,),
+                                      Image.asset('assets/images/heart.png', height: size.height*.1,),
                                       Text('Measure', style: cardTextStyle)
                                     ],
                                   ),
@@ -129,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Image.asset('assets/images/instructions.png', height: 100,),
+                                      Image.asset('assets/images/instructions.png', height: size.height*.1,),
                                       Text('Help', style: cardTextStyle)
                                     ],
                                   ),
@@ -164,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Image.asset('assets/images/list.png', height: 100,),
+                                      Image.asset('assets/images/list.png', height: size.height*.1),
                                       Text('History', style: cardTextStyle)
                                     ],
                                   ),
@@ -199,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Image.asset('assets/images/editor.png', height: 100,),
+                                      Image.asset('assets/images/editor.png', height: size.height*.1),
                                       Text('About us', style: cardTextStyle)
                                     ],
                                   ),

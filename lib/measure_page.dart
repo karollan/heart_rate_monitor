@@ -54,7 +54,7 @@ class MeasurePage extends StatelessWidget {
                             ),
 
                             Container(
-                              constraints: BoxConstraints(minHeight: 270.0, minWidth: 270),
+                              constraints: BoxConstraints(minHeight: size.height*.3, minWidth: size.height*.3),
                               margin: EdgeInsets.all(10),
                               child: ElevatedButton(
                                 //Measure START
@@ -83,9 +83,9 @@ class MeasurePage extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
-                                          'TAP HERE TO START',
+                                          'TAP TO START',
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               color: Colors.white,
                                               fontFamily: 'Montserrat Regular'
                                           ),
