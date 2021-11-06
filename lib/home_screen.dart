@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .push(PageRouteBuilder(
                                         pageBuilder: (context, animation, secondaryAnimation) => MeasurePage(),
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                          const begin = Offset(0.0, 1.0);
+                                          const begin = Offset(1.0, 0.0);
                                           const end = Offset.zero;
                                           const curve = Curves.ease;
 
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .push(PageRouteBuilder(
                                         pageBuilder: (context, animation, secondaryAnimation) => HelpPage(),
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                          const begin = Offset(0.0, 1.0);
+                                          const begin = Offset(1.0, 0.0);
                                           const end = Offset.zero;
                                           const curve = Curves.ease;
 
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .push(PageRouteBuilder(
                                         pageBuilder: (context, animation, secondaryAnimation) => HistoryPage(),
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                          const begin = Offset(0.0, 1.0);
+                                          const begin = Offset(1.0, 0.0);
                                           const end = Offset.zero;
                                           const curve = Curves.ease;
 
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .push(PageRouteBuilder(
                                        pageBuilder: (context, animation, secondaryAnimation) => AboutPage(),
                                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                         const begin = Offset(0.0, 1.0);
+                                         const begin = Offset(1.0, 0.0);
                                          const end = Offset.zero;
                                          const curve = Curves.ease;
 

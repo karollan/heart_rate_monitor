@@ -67,9 +67,9 @@ class AboutPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
-                                    "Foo",
+                                    "Jakis",
                                   ),
-                                  Text("bar")
+                                  Text("tekst")
                                 ],
                               ),
                             )),
@@ -118,9 +118,9 @@ class AboutPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
-                                    "Foo",
+                                    "Jakis",
                                   ),
-                                  Text("bar")
+                                  Text("tekst")
                                 ],
                               ),
                             )),
@@ -163,7 +163,7 @@ class AboutPage extends StatelessWidget {
                             .push(PageRouteBuilder(
                             pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(0.0, 1.0);
+                              const begin = Offset(-1.0, 0.0);
                               const end = Offset.zero;
                               const curve = Curves.ease;
 
