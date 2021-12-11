@@ -109,6 +109,7 @@ class MeasurePageView extends State<MeasurePage> {
       } else  {
         timer.cancel();
       }
+      //  TODO CZY TO DZIALA TO NIE WIEM CHODZI O TO ZE PO 30S MA SIE WYLACZYC
       if (_timerCountdown == 0) {
         timer.cancel();
         _untoggle();
@@ -291,6 +292,8 @@ class MeasurePageView extends State<MeasurePage> {
                               margin: EdgeInsets.all(10),
                               child: ElevatedButton(
                                 onPressed: () {
+                                  _disposeController();
+                                  Wakelock.disable();
                                   _toggled = false;
                                   Navigator.of(context)
                                       .push(PageRouteBuilder(
