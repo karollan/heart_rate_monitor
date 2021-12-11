@@ -196,7 +196,13 @@ class MeasurePageView extends State<MeasurePage> {
     return Scaffold(
         body: Stack(
             children: <Widget>[
-              Container(
+              _controller != null && _toggled
+                  ? AspectRatio(
+                aspectRatio:
+                _controller!.value.aspectRatio,
+                child: CameraPreview(_controller!),
+              )
+                  : Container(
                 height: size.height * .3,
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -205,6 +211,20 @@ class MeasurePageView extends State<MeasurePage> {
                   ),
                 ),
               ),
+              Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(4),
+              child: Text(
+              _toggled
+              ? "Cover both the camera and the flash with your finger"
+                  : "Camera feed will display here",
+              style: TextStyle(
+              backgroundColor: _toggled
+              ? Colors.white
+                  : Colors.transparent),
+              textAlign: TextAlign.center,
+              )),
+
 
               SafeArea(
                   child: Padding(
