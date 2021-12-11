@@ -1,4 +1,4 @@
-
+import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:heart_rate_monitor/home_screen.dart';
@@ -16,11 +16,9 @@ class MeasurePage extends StatefulWidget {
 }
 
 // TODO Duzo bledow, trzeba ustawic najlepiej zeby bylo 5s przed startem (albo po zaslonieciu kamery nie wiem co latwiejsze)
-//  Naprawic date (pokazuje milisekundy w wyniku)
 //  Często są jakieś błedy jak się klika drugi raz w guzik do rozpoczęcia pomiaru
 //  Jak się zacznie pomiar i kliknie od razu guzik drugi raz to zapisuje wynik do historii
 //  Za zapis odpowiada databaseHelper i klasa Measure (musi byc async)
-//  Dodać do about nasze opisy
 //  Pewnie jeszcze sa jakies bledy trzeba poklikac
 //  Wszystkie funkcje praktycznie 1:1 z gita zmiany wprowadzilem w toggle, untoggle, initTimer, updateBPM
 
@@ -83,7 +81,9 @@ class MeasurePageView extends State<MeasurePage> {
     Wakelock.disable();
     //Make singleton
     var databaseHelper = DatabaseHelper();
-    Measure measure = Measure(result: _bpmList.average.floor().toString(), date: DateTime(_now!.year, _now!.month, _now!.day, _now!.hour, _now!.minute).toString(), img: 'heart.png', graph: 'graph');
+    DateTime _dateTime = DateTime(_now!.year, _now!.month, _now!.day, _now!.hour, _now!.minute);
+    String _formatDate = (DateFormat('yyyy-MM-dd HH:mm:ss').format(_dateTime)).toString();
+    Measure measure = Measure(result: _bpmList.average.floor().toString(), date: _formatDate, img: 'heart.png', graph: 'graph');
     //insert data
     await databaseHelper.insertMeasure(measure);
     _isFinished = true;
