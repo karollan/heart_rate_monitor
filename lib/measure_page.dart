@@ -15,13 +15,19 @@ class MeasurePage extends StatefulWidget {
   MeasurePageView createState() => MeasurePageView();
 }
 
-// TODO Duzo bledow, trzeba ustawic timer zeby liczyl tylko 30s
+// TODO Duzo bledow, trzeba ustawic najlepiej zeby bylo 5s przed startem (albo po zaslonieciu kamery nie wiem co latwiejsze)
 //  Naprawic date (pokazuje milisekundy w wyniku)
-//
+//  Często są jakieś błedy jak się klika drugi raz w guzik do rozpoczęcia pomiaru
+//  Jak się zacznie pomiar i kliknie od razu guzik drugi raz to zapisuje wynik do historii
+//  Za zapis odpowiada databaseHelper i klasa Measure (musi byc async)
+//  Dodać do about nasze opisy
+//  Pewnie jeszcze sa jakies bledy trzeba poklikac
+//  Wszystkie funkcje praktycznie 1:1 z gita zmiany wprowadzilem w toggle, untoggle, initTimer, updateBPM
+
+
 
 class MeasurePageView extends State<MeasurePage> {
   bool _toggled = false; // toggle button value
-  bool _fingerOnCamera = false;
   List<SensorValue> _data = <SensorValue>[]; // array to store the values
   CameraController? _controller;
   double _alpha = 0.3; // factor for the mean value
@@ -34,6 +40,8 @@ class MeasurePageView extends State<MeasurePage> {
   Timer? _timer; // timer for image processing
   int? _timerCountdown;
   List<int> _bpmList = <int>[];
+  String? _score;
+  bool _isFinished = false;
 
   @override
   void dispose() {
@@ -61,6 +69,7 @@ class MeasurePageView extends State<MeasurePage> {
       Wakelock.enable();
       setState(() {
         _toggled = true;
+        _isFinished = false;
       });
       // after is toggled
       this._timerCountdown = 1000*_fs;
@@ -77,6 +86,8 @@ class MeasurePageView extends State<MeasurePage> {
     Measure measure = Measure(result: _bpmList.average.floor().toString(), date: DateTime(_now!.year, _now!.month, _now!.day, _now!.hour, _now!.minute).toString(), img: 'heart.png', graph: 'graph');
     //insert data
     await databaseHelper.insertMeasure(measure);
+    _isFinished = true;
+    _score = _bpmList.average.floor().toString();
     setState(() {
       _toggled = false;
     });
@@ -132,7 +143,6 @@ class MeasurePageView extends State<MeasurePage> {
       _data.removeAt(0);
     }
     setState(() {
-      _fingerOnCamera = true;
       _data.add(SensorValue(_now!, 255 - _avg));
     });
   }
@@ -194,6 +204,8 @@ class MeasurePageView extends State<MeasurePage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+
+        //Zdjecie i widok z kamery
         body: Stack(
             children: <Widget>[
               _controller != null && _toggled
@@ -211,21 +223,8 @@ class MeasurePageView extends State<MeasurePage> {
                   ),
                 ),
               ),
-              Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(4),
-              child: Text(
-              _toggled
-              ? "Cover both the camera and the flash with your finger"
-                  : "Camera feed will display here",
-              style: TextStyle(
-              backgroundColor: _toggled
-              ? Colors.white
-                  : Colors.transparent),
-              textAlign: TextAlign.center,
-              )),
 
-
+              //Napis measure i Camera feed coś tam
               SafeArea(
                   child: Padding(
                       padding: EdgeInsets.all(40.0),
@@ -243,12 +242,26 @@ class MeasurePageView extends State<MeasurePage> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text('Measure', style: TextStyle(fontFamily: 'Montserrat Medium', color: Colors.white, fontSize: 28)),
+                                            Container(
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  _toggled
+                                                      ? "Cover the camera and the flash with your finger"
+                                                      : "Camera feed will display here",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontFamily: 'Montserrat Medium',
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                )),
                                           ]
                                       )
                                     ]
                                 )
                             ),
 
+                            // Guzik do rozpoczecia pomiaru, onPressed funkcja po kliknieciu
                             Container(
                               constraints: BoxConstraints(minHeight: size.height*.3, minWidth: size.height*.3),
                               margin: EdgeInsets.all(10),
@@ -281,8 +294,7 @@ class MeasurePageView extends State<MeasurePage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
-                                          _toggled ? (_bpm > 30 && _bpm < 150 ? _bpm.toString() : "--") :
-                                          'TAP TO START',
+                                          _isFinished ? (!_toggled ? "${_score!} BPM" : 'Ongoing measurement.') : 'TAP TO START',
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Colors.white,
@@ -302,11 +314,17 @@ class MeasurePageView extends State<MeasurePage> {
                               ),
                             ),
                             SizedBox(height: 40),
+
+                            // Wykres
                             Expanded(
                               child: Chart(_data),
                             ),
+
+                            //Tekst z odliczanie,
                             //  TODO TUTAJ MA BYC NAPIS PO KLIKNIECIU ZEBY ZASLONIC KAMERE A POTEM ODLICZANIE OD 30
-                            Text(_fingerOnCamera ? (_toggled ? "${(_timerCountdown!/1000).toString()} to finish." : 'Cover the camera with your finger!') : ''),
+                            Text(_toggled ? "${(_timerCountdown!/1000).toString()} to finish." : ''),
+
+                            //Guzik do powrotu na glowna strone
                             Container(
                               constraints: BoxConstraints(minHeight: 50.0),
                               margin: EdgeInsets.all(10),
