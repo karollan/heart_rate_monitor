@@ -322,7 +322,7 @@ class MeasurePageView extends State<MeasurePage> {
 
                             //Tekst z odliczanie,
                             //  TODO TUTAJ MA BYC NAPIS PO KLIKNIECIU ZEBY ZASLONIC KAMERE A POTEM ODLICZANIE OD 30
-                            Text(_toggled ? "${(_timerCountdown!/1000).toString()} to finish." : ''),
+                            Text(_toggled ? "${((_timerCountdown!/1000).round()).toString()}s to finish." : ''),
 
                             //Guzik do powrotu na glowna strone
                             Container(
