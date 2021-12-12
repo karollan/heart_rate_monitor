@@ -17,15 +17,6 @@ class MeasurePage extends StatefulWidget {
   MeasurePageView createState() => MeasurePageView();
 }
 
-// TODO Duzo bledow, trzeba ustawic najlepiej zeby bylo 5s przed startem (albo po zaslonieciu kamery nie wiem co latwiejsze)
-//  Często są jakieś błedy jak się klika drugi raz w guzik do rozpoczęcia pomiaru
-//  Jak się zacznie pomiar i kliknie od razu guzik drugi raz to zapisuje wynik do historii
-//  Za zapis odpowiada databaseHelper i klasa Measure (musi byc async)
-//  Pewnie jeszcze sa jakies bledy trzeba poklikac
-//  Wszystkie funkcje praktycznie 1:1 z gita zmiany wprowadzilem w toggle, untoggle, initTimer, updateBPM
-
-
-
 class MeasurePageView extends State<MeasurePage> {
   bool _toggled = false; // toggle button value
   List<SensorValue> _data = <SensorValue>[]; // array to store the values
@@ -75,6 +66,7 @@ class MeasurePageView extends State<MeasurePage> {
       setState(() {
         _toggled = true;
         _timeToStartCounter = 5;
+        _isFinished = false;
       });
       _timerBeforeStart = Timer.periodic(Duration(seconds: 1), (timer) {
         if (_timeToStartCounter == 0) {
@@ -82,7 +74,7 @@ class MeasurePageView extends State<MeasurePage> {
           Wakelock.enable();
           setState(() {
             _timerBeforeStart!.cancel();
-            _isFinished = false;
+            _isFinished = true;
           });
             // after is toggled
             this._timerCountdown = 1000*_fs;
@@ -153,7 +145,7 @@ class MeasurePageView extends State<MeasurePage> {
       } else  {
         timer.cancel();
       }
-      //  TODO CZY TO DZIALA TO NIE WIEM CHODZI O TO ZE PO 30S MA SIE WYLACZYC
+
       if (_timerCountdown == 0) {
         timer.cancel();
         _untoggle();
@@ -302,7 +294,6 @@ class MeasurePageView extends State<MeasurePage> {
 
                                   //Create data
 
-                                  // TODO: Ma być 30s pomiaru, 5s czekania przed rozpoczęciem
                                   if (_toggled) {
                                     _untoggle();
                                   } else {
@@ -325,7 +316,7 @@ class MeasurePageView extends State<MeasurePage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
-                                          _isFinished ? (!_toggled ? "${_score!} BPM" : 'Ongoing measurement.') : 'TAP TO START',
+                                          _isFinished ? (!_toggled ? "${_score!} BPM" : 'MEASUREMENT') : 'TAP TO START',
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Colors.white,
@@ -356,7 +347,7 @@ class MeasurePageView extends State<MeasurePage> {
                             ),
 
 
-                            //Tekst z odliczanie,
+                            //Tekst z odliczaniem
                             _toggled && (_timerCountdown != null && _timeToStartCounter <= 0) ? Text('${((_timerCountdown!/1000).round()).toString()}s to finish.') : SizedBox(),
 
                             //Guzik do powrotu na glowna strone

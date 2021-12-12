@@ -72,8 +72,9 @@ class AboutPage extends StatelessWidget {
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
-                                                    "I am a student of biomedical engineering from Poland. I enjoy creating games for mobile devices."
-                                                        " My TOP3 programinng languages: Python, C#, Java",
+                                                    "Hi, I am a student of Biomedical Engineering. "
+                                                    "I enjoy creating apps for mobile devices. "
+                                                        "\n🏆 My TOP3 programinng languages: Python, C#, Java. 🏆",
                                                   )
                                                 ],
                                               ),
