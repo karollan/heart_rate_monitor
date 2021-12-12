@@ -35,6 +35,7 @@ dependencies:
   wakelock: ^0.5.6
   camera: ^0.9.4+5
   charts_flutter: ^0.12.0
+  screenshot: ^1.2.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -8,9 +9,10 @@ import 'package:wakelock/wakelock.dart';
 import 'package:heart_rate_monitor/models/Chart.dart';
 import 'package:collection/collection.dart';
 
+import 'models/Utils.dart';
+
 //About Page
 class MeasurePage extends StatefulWidget {
-
   @override
   MeasurePageView createState() => MeasurePageView();
 }
@@ -41,8 +43,15 @@ class MeasurePageView extends State<MeasurePage> {
   String? _score;
   bool _isFinished = false;
 
+  final _chartKey = GlobalKey();
+  Uint8List? _chartImage;
+
+  int _timeToStartCounter = 5;
+  Timer? _timerBeforeStart;
+
   @override
   void dispose() {
+    _timerBeforeStart?.cancel();
     _timer?.cancel();
     _toggled = false;
     _disposeController();
@@ -62,35 +71,59 @@ class MeasurePageView extends State<MeasurePage> {
   }
 
   void _toggle() {
-    _clearData();
     _initController().then((onValue) {
-      Wakelock.enable();
       setState(() {
         _toggled = true;
-        _isFinished = false;
+        _timeToStartCounter = 5;
       });
-      // after is toggled
-      this._timerCountdown = 1000*_fs;
-      _initTimer();
-      _updateBPM();
+      _timerBeforeStart = Timer.periodic(Duration(seconds: 1), (timer) {
+        if (_timeToStartCounter == 0) {
+          _clearData();
+          Wakelock.enable();
+          setState(() {
+            _timerBeforeStart!.cancel();
+            _isFinished = false;
+          });
+            // after is toggled
+            this._timerCountdown = 1000*_fs;
+            _initTimer();
+            _updateBPM();
+        } else {
+          setState(() {
+            _timeToStartCounter--;
+          });
+        }
     });
+      });
   }
 
   void _untoggle() async {
     _disposeController();
     Wakelock.disable();
-    //Make singleton
-    var databaseHelper = DatabaseHelper();
-    DateTime _dateTime = DateTime(_now!.year, _now!.month, _now!.day, _now!.hour, _now!.minute);
-    String _formatDate = (DateFormat('yyyy-MM-dd HH:mm:ss').format(_dateTime)).toString();
-    Measure measure = Measure(result: _bpmList.average.floor().toString(), date: _formatDate, img: 'heart.png', graph: 'graph');
-    //insert data
-    await databaseHelper.insertMeasure(measure);
-    _isFinished = true;
-    _score = _bpmList.average.floor().toString();
     setState(() {
+      _timeToStartCounter = 5;
       _toggled = false;
+      _timerBeforeStart!.cancel();
     });
+
+    if (_timerCountdown! <= 0) {
+      //Make image of chart
+      Uint8List image = await Utils.capture(_chartKey);
+      setState(() {
+        _chartImage = image;
+        _score = _bpmList.average.floor().toString();
+      });
+      _isFinished = true;
+      _addToDatabase();
+    }
+  }
+
+  _addToDatabase() async {
+      var databaseHelper = DatabaseHelper();
+      DateTime _dateTime = DateTime(_now!.year, _now!.month, _now!.day, _now!.hour, _now!.minute);
+      String _formatDate = (DateFormat('yyyy-MM-dd HH:mm:ss').format(_dateTime)).toString();
+      Measure measure = Measure(result: _score as String, date: _formatDate, img: 'heart.png', graph: _chartImage as Uint8List);
+      await databaseHelper.insertMeasure(measure);
   }
 
   void _disposeController() {
@@ -128,7 +161,6 @@ class MeasurePageView extends State<MeasurePage> {
       {
         setState(() {
           _timerCountdown = _timerCountdown! - _fs;
-          print(_timerCountdown);
         });
       }
     });
@@ -186,9 +218,9 @@ class MeasurePageView extends State<MeasurePage> {
         print(_bpm);
         setState(() {
           this._bpm = ((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
-          if (this._bpm > 30 && this._bpm < 150) {
+          //if (this._bpm > 30 && this._bpm < 150) {
             _bpmList.add(this._bpm);
-          }
+          //}
         });
       }
       await Future.delayed(Duration(
@@ -204,7 +236,6 @@ class MeasurePageView extends State<MeasurePage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-
         //Zdjecie i widok z kamery
         body: Stack(
             children: <Widget>[
@@ -315,14 +346,18 @@ class MeasurePageView extends State<MeasurePage> {
                             ),
                             SizedBox(height: 40),
 
+                            _toggled && _timeToStartCounter > 0 ? Text('${_timeToStartCounter}s to start') : SizedBox(),
+
                             // Wykres
                             Expanded(
-                              child: Chart(_data),
+                                    child: RepaintBoundary(
+                                        key: _chartKey,
+                                        child: Chart(_data))
                             ),
 
+
                             //Tekst z odliczanie,
-                            //  TODO TUTAJ MA BYC NAPIS PO KLIKNIECIU ZEBY ZASLONIC KAMERE A POTEM ODLICZANIE OD 30
-                            Text(_toggled ? "${((_timerCountdown!/1000).round()).toString()}s to finish." : ''),
+                            _toggled && (_timerCountdown != null && _timeToStartCounter <= 0) ? Text('${((_timerCountdown!/1000).round()).toString()}s to finish.') : SizedBox(),
 
                             //Guzik do powrotu na glowna strone
                             Container(

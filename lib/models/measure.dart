@@ -1,9 +1,11 @@
 
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
+import 'package:heart_rate_monitor/models/Chart.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:heart_rate_monitor/models/Chart.dart';
 
 // database table and column names
 final String tableMeasurements = 'measurements';
@@ -19,7 +21,7 @@ class Measure {
   String date;
   String img;
   //TODO GRAPH MUSI BYC TABLICA Z WYNIKAMI
-  String graph;
+  Uint8List graph;
 
   Measure({
     this.id,
@@ -69,7 +71,7 @@ class DatabaseHelper {
             $columnResults TEXT NOT NULL,
             $columnDate TEXT NOT NULL,
             $columnImg TEXT NOT NULL,
-            $columnGraph TEXT NOT NULL
+            $columnGraph BLOB NOT NULL
           )
           '''
         );
@@ -97,7 +99,7 @@ class DatabaseHelper {
   Future<List<Measure>> queryAllMeasures() async {
     final db = await getDatabase();
     // Query the table for all The Measurements.
-    final List<Map<String, dynamic>> maps = await db!.query(tableMeasurements);
+    final List<Map<dynamic, dynamic>> maps = await db!.query(tableMeasurements);
 
     // Convert the List<Map<String, dynamic> into a List<Measure>.
     return List.generate(maps.length, (i) {

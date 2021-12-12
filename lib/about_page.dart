@@ -66,14 +66,14 @@ class AboutPage extends StatelessWidget {
                                             height: size.height*.3,
                                             width: double.infinity,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(top: 20.0),
+                                              padding: const EdgeInsets.all(45.0),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
-                                                    "I am a student of biomedical engineering in Poland. I enjoy creating games for mobile devices."
-                                                        "My TOP3 programinng languages: Python, C#, Java",
+                                                    "I am a student of biomedical engineering from Poland. I enjoy creating games for mobile devices."
+                                                        " My TOP3 programinng languages: Python, C#, Java",
                                                   )
                                                 ],
                                               ),
@@ -119,13 +119,15 @@ class AboutPage extends StatelessWidget {
                                             height: size.height*.3,
                                             width: double.infinity,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(top: 45.0),
+                                              padding: const EdgeInsets.all(45.0),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
-                                                    "I am a student of biomedical engineering in Poland. I like not very popular programming languages.",
+                                                    "Hello, my name is Karol Lange. I am currently a 3rd year "
+                                                        "student in the field of Biomedical Engineering with a "
+                                                        "specialization in computer science. I make apps in Python, C# and from now in Flutter :)",
                                                   )
                                                 ],
                                               ),
