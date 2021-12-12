@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_rate_monitor/home_screen.dart';
@@ -56,14 +55,14 @@ class _HistoryPageState extends State<HistoryPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('BPM ${measure.result}', style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:28)),
-                              Text(measure.date, style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:16)),
+                              Text(measure.date, style: TextStyle(fontFamily: 'Montserrat Medium', fontSize:12)),
                             ]
                           )
                         ]
                     )
                 ),
-                Text('GRAPH'),
-                Spacer(),
+                Expanded(
+                    child: Image.memory(measure.graph)),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
@@ -175,7 +174,7 @@ class _HistoryPageState extends State<HistoryPage> {
             height: 50.0,
           ),
         ),
-        trailing: Text(measure.graph),
+        trailing: Image.memory(measure.graph),
       ),
     );
   }
